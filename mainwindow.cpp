@@ -91,8 +91,39 @@ void MainWindow::math_operations()
 
     QPushButton *button = static_cast<QPushButton*>(sender());
     num_first = ui->result_show->text().toDouble();
-    ui->result_show->setText("");
+    if(!ui->pushButton_plus->isChecked())
+    {
+        ui->result_show->setText("");
+    }
+
     button->setChecked(true);
+
+    //история ввода
+    QString labelHistory;
+    if(ui->pushButton_plus->isChecked())
+    {
+        labelHistory = QString::number(num_first, 'g',15);
+        labelHistory += "+";
+        ui->input_history->setText(labelHistory);
+    }
+    else if(ui->pushButton_multiply->isChecked())
+    {
+        labelHistory = QString::number(num_first, 'g',15);
+        labelHistory += "*";
+        ui->input_history->setText(labelHistory);
+    }
+    else if(ui->pushButton_minus->isChecked())
+    {
+        labelHistory = QString::number(num_first, 'g',15);
+        labelHistory += "-";
+        ui->input_history->setText(labelHistory);
+    }
+    else if(ui->pushButton_division->isChecked())
+    {
+        labelHistory = QString::number(num_first, 'g',15);
+        labelHistory += "/";
+        ui->input_history->setText(labelHistory);
+    }
 
 }
 
@@ -105,6 +136,7 @@ void MainWindow::on_pushButton_AC_clicked()
     ui->pushButton_plus->setChecked(false);
 
     ui->result_show->setText("0");
+    ui->input_history->setText("");
 }
 
 
@@ -115,6 +147,7 @@ void MainWindow::on_pushButton_equally_clicked()
     num_second = ui->result_show->text().toDouble();
     if(ui->pushButton_plus->isChecked())
     {
+        ui->input_history->setText("");
         labelNumber = num_first+num_second;
         new_label = QString::number(labelNumber, 'g',15);
         ui->result_show->setText(new_label);
@@ -122,6 +155,7 @@ void MainWindow::on_pushButton_equally_clicked()
     }
     else if(ui->pushButton_multiply->isChecked())
     {
+        ui->input_history->setText("");
         labelNumber = num_first*num_second;
         new_label = QString::number(labelNumber, 'g',15);
         ui->result_show->setText(new_label);
@@ -129,6 +163,7 @@ void MainWindow::on_pushButton_equally_clicked()
     }
     else if(ui->pushButton_minus->isChecked())
     {
+        ui->input_history->setText("");
         labelNumber = num_first-num_second;
         new_label = QString::number(labelNumber, 'g',15);
         ui->result_show->setText(new_label);
@@ -138,10 +173,12 @@ void MainWindow::on_pushButton_equally_clicked()
     {
         if(num_second == 0)
         {
+            ui->input_history->setText("");
             ui->result_show->setText("невозможно");
         }
         else
         {
+            ui->input_history->setText("");
             labelNumber = num_first/num_second;
             new_label = QString::number(labelNumber, 'g',15);
             ui->result_show->setText(new_label);
