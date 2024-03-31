@@ -26,6 +26,10 @@ private slots:
     void opertions();
     void on_pushButton_AC_clicked();
     void on_pushButton_equally_clicked();
-    void math_operations();
+    //void math_operations();
+    void math_operations_plus();
+    void math_operations_minus();
+    void math_operations_division();
+    void math_operations_multiply();
 };
 #endif // MAINWINDOW_H
