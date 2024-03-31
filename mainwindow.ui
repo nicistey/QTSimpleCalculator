@@ -693,8 +693,20 @@ color: rgb(42, 42, 42);</string>
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(109, 109, 109)</string>
+    </property>
     <property name="text">
-     <string> </string>
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
     </property>
    </widget>
   </widget>

@@ -1,7 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//первый введеное число
 double num_first;
+
+//проверка на двойное нажатие мат операции
+//(например если ввели число, после нажали на знак мат операции, и еще раз нажали на знак мат операции до знака равно)
+bool already_pressed_math_operations = false;
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -88,42 +95,48 @@ void MainWindow::opertions()
 
 void MainWindow::math_operations()
 {
-
-    QPushButton *button = static_cast<QPushButton*>(sender());
-    num_first = ui->result_show->text().toDouble();
-    if(!ui->pushButton_plus->isChecked())
+    if (!already_pressed_math_operations)
     {
+        QPushButton *button = static_cast<QPushButton*>(sender());
+        num_first = ui->result_show->text().toDouble();
         ui->result_show->setText("");
+
+
+        button->setChecked(true);
+
+        //история ввода
+        QString labelHistory;
+        if(ui->pushButton_plus->isChecked())
+        {
+            labelHistory = QString::number(num_first, 'g',15);
+            labelHistory += "+";
+            ui->input_history->setText(labelHistory);
+            already_pressed_math_operations = true;//мат операция нажата
+        }
+        else if(ui->pushButton_multiply->isChecked())
+        {
+            labelHistory = QString::number(num_first, 'g',15);
+            labelHistory += "*";
+            ui->input_history->setText(labelHistory);
+            already_pressed_math_operations = true;//мат операция нажата
+        }
+        else if(ui->pushButton_minus->isChecked())
+        {
+            labelHistory = QString::number(num_first, 'g',15);
+            labelHistory += "-";
+            ui->input_history->setText(labelHistory);
+            already_pressed_math_operations = true;//мат операция нажата
+        }
+        else if(ui->pushButton_division->isChecked())
+        {
+            labelHistory = QString::number(num_first, 'g',15);
+            labelHistory += "/";
+            ui->input_history->setText(labelHistory);
+            already_pressed_math_operations = true;//мат операция нажата
+        }
     }
 
-    button->setChecked(true);
 
-    //история ввода
-    QString labelHistory;
-    if(ui->pushButton_plus->isChecked())
-    {
-        labelHistory = QString::number(num_first, 'g',15);
-        labelHistory += "+";
-        ui->input_history->setText(labelHistory);
-    }
-    else if(ui->pushButton_multiply->isChecked())
-    {
-        labelHistory = QString::number(num_first, 'g',15);
-        labelHistory += "*";
-        ui->input_history->setText(labelHistory);
-    }
-    else if(ui->pushButton_minus->isChecked())
-    {
-        labelHistory = QString::number(num_first, 'g',15);
-        labelHistory += "-";
-        ui->input_history->setText(labelHistory);
-    }
-    else if(ui->pushButton_division->isChecked())
-    {
-        labelHistory = QString::number(num_first, 'g',15);
-        labelHistory += "/";
-        ui->input_history->setText(labelHistory);
-    }
 
 }
 
@@ -142,6 +155,7 @@ void MainWindow::on_pushButton_AC_clicked()
 
 void MainWindow::on_pushButton_equally_clicked()
 {
+    already_pressed_math_operations = false;
     double labelNumber, num_second;
     QString new_label;
     num_second = ui->result_show->text().toDouble();
